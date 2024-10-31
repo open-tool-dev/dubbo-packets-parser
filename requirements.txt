@@ -1,0 +1,6 @@
+dpkt==1.9.6
+loguru~=0.7.2
+dataclasses-json==0.6.7
+pytest==8.3.3
+setuptools==74.1.0
+elasticsearch7==7.16.2

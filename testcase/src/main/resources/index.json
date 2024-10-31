@@ -1,0 +1,81 @@
+// PUT dubbo_packets
+{
+    "mappings": {
+        "_meta": {},
+        "properties": {
+            "@timestamp": {
+                "type": "date",
+                "format": "yyyy-MM-dd HH:mm:ss||strict_date_optional_time||epoch_millis"
+            },
+            "start_time": {
+                "type": "date",
+                "format": "yyyy-MM-dd HH:mm:ss||strict_date_optional_time||epoch_millis"
+            },
+            "end_time": {
+                "type": "date",
+                "format": "yyyy-MM-dd HH:mm:ss||strict_date_optional_time||epoch_millis"
+            },
+            "src_addr": {
+                "type": "keyword"
+            },
+            "src_port": {
+                "type": "keyword"
+            },
+            "dst_addr": {
+                "type": "keyword"
+            },
+            "dst_port": {
+                "type": "keyword"
+            },
+            "service_name": {
+                "type": "keyword"
+            },
+            "service_version": {
+                "type": "keyword"
+            },
+            "method_name": {
+                "type": "keyword"
+            },
+            "parameters": {
+                "type": "text",
+                "analyzer": "ik_smart"
+            },
+            "request_attachments": {
+                "type": "text",
+                "analyzer": "ik_smart"
+            },
+            "result": {
+                "type": "text",
+                "analyzer": "ik_smart"
+            },
+            "error": {
+                "type": "text",
+                "analyzer": "ik_smart"
+            },
+            "response_attachments": {
+                "type": "text",
+                "analyzer": "ik_smart"
+            },
+            "cost_time_ms": {
+                "type": "float"
+            }
+        }
+    },
+    "settings": {
+        "index": {
+            "refresh_interval": "10s",
+            "number_of_shards": "4",
+            "translog": {
+                "flush_threshold_size": "128mb",
+                "sync_interval": "1m",
+                "durability": "async"
+            },
+            "merge": {
+                "scheduler": {
+                    "max_thread_count": "1"
+                }
+            },
+            "number_of_replicas": "0"
+        }
+    }
+}
