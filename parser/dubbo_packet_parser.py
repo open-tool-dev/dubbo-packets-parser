@@ -90,8 +90,9 @@ class DubboPacketParser:
             cost_time = end_time - start_time
             if request and request.state and not request.state.is_event:
                 document = {
-                    "start_time": request.start_time * 1000,
-                    "end_time": end_time * 1000,
+                    "@timestamp": int(request.start_time * 1000),
+                    "start_time": request.start_time,
+                    "end_time": end_time,
                     "src_addr": src_ip,
                     "src_port": src_port,
                     "dst_addr": dest_ip,
@@ -116,7 +117,7 @@ class DubboPacketParser:
                         "service_name": service_name,
                         "service_version": service_version,
                         "method_name": method_name,
-                        "parameters": json.dumps(attachments, ensure_ascii=False),
+                        "parameters": json.dumps(parameters, ensure_ascii=False),
                         "request_attachments": json.dumps(attachments, ensure_ascii=False),
                     }
                 )
@@ -156,5 +157,6 @@ class DubboPacketParser:
         for doc in self._batch_queue:
             actions.append({"index": {"_index": self._index_name}})
             actions.append(json.dumps(doc))
-        self._elastic_client.bulk(body=actions, index=self._index_name)
+        result = self._elastic_client.bulk(body=actions, index=self._index_name)
+        result.items()
         self._batch_queue.clear()
