@@ -157,6 +157,5 @@ class DubboPacketParser:
         for doc in self._batch_queue:
             actions.append({"index": {"_index": self._index_name}})
             actions.append(json.dumps(doc))
-        result = self._elastic_client.bulk(body=actions, index=self._index_name)
-        result.items()
+        self._elastic_client.bulk(body=actions, index=self._index_name)
         self._batch_queue.clear()
